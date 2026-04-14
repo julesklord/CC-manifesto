@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conscious Code Manifesto v1.1 — Fearless Media Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0d0d0b;
+      --bg-2:      #141412;
+      --bg-3:      #1c1c19;
+      --border:    #2a2a26;
+      --border-hi: #3e3e38;
+      --text:      #dedad0;
+      --text-2:    #8c897f;
+      --text-3:    #565550;
+      --gold:      #c8a84b;
+      --gold-dim:  #7a6530;
+      --gold-glow: rgba(200,168,75,.12);
+      --blue:      #5b8db8;
+      --red:       #b85b5b;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Top accent line */
+    .top-bar {
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 2px;
+      background: var(--blue);
+      position: fixed;
+      top: 2px;
+      left: 0;
+      width: 0%;
+      z-index: 100;
+      transition: width .1s ease;
+      opacity: 0.7;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding: 1.5rem 2rem;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-3);
+      text-decoration: none;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--gold); }
+
+    /* Layout */
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 8rem 0 5rem;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp .8s ease forwards;
+    }
+
+    .fmg-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .fmg-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -.01em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .version-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      border: 1px solid var(--border-hi);
+      border-radius: 2px;
+      padding: .3rem .7rem;
+    }
+    .header-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      font-weight: 300;
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-block {
+      padding: 5rem 0 0;
+      opacity: 0;
+      animation: fadeUp .7s ease forwards;
+    }
+
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .section-eyebrow::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    p {
+      font-size: 15px;
+      color: var(--text-2);
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+    p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Problem examples */
+    .problem-examples {
+      margin: 1.5rem 0;
+      padding: 1.25rem 1.5rem;
+      border-left: 2px solid var(--red);
+      background: rgba(184,91,91,.05);
+      border-radius: 0 6px 6px 0;
+    }
+    .problem-examples p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-3);
+      margin: 0;
+      line-height: 2;
+    }
+    .problem-examples p::before { content: '→ '; color: var(--red); }
+
+    /* Position block */
+    .position-block {
+      margin: 2rem 0;
+      padding: 2rem;
+      background: var(--gold-glow);
+      border: 1px solid var(--gold-dim);
+      border-radius: 4px;
+    }
+    .position-block p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .position-block strong { color: var(--gold); font-weight: 500; }
+
+    /* ── PRINCIPLES ── */
+    .principles-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 1rem;
+    }
+
+    .principle-card {
+      position: relative;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp .6s ease forwards;
+    }
+    .principle-card:first-child { border-top: 1px solid var(--border); }
+
+    .p-ghost-num {
+      position: absolute;
+      right: -1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10rem;
+      font-weight: 600;
+      color: var(--text);
+      opacity: 0.028;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .p-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .p-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .2rem .5rem;
+      border: 1px solid var(--border-hi);
+      border-radius: 2px;
+      color: var(--text-3);
+      margin-left: .75rem;
+      vertical-align: middle;
+    }
+    .p-tag.new { border-color: var(--gold-dim); color: var(--gold); }
+
+    h3.p-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .p-body {
+      font-size: 15px;
+      color: var(--text-2);
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+      max-width: 560px;
+    }
+    .p-body strong { color: var(--text); font-weight: 500; }
+
+    .p-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .p-items li {
+      font-size: 13px;
+      color: var(--text-3);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 300;
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.6;
+    }
+    .p-items li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    /* ── OPERATIONAL ── */
+    .ops-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+
+    .op-block {
+      background: var(--bg-2);
+      padding: 1.5rem;
+    }
+
+    .op-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .op-title::before {
+      content: '☐';
+      color: var(--gold);
+      font-size: 14px;
+    }
+
+    .op-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+    .op-items li {
+      font-size: 13px;
+      color: var(--text-2);
+      font-weight: 300;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .op-items li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--text-3);
+      font-size: 11px;
+      top: .15rem;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      color: var(--blue);
+      padding: .15rem .45rem;
+      border-radius: 3px;
+    }
+
+    /* ── CHECKLIST ── */
+    .checklist-section {
+      margin-top: 2rem;
+    }
+
+    .checklist-group {
+      margin-bottom: 2.5rem;
+    }
+
+    .checklist-group-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cl-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .cl-item:hover { background: rgba(255,255,255,.01); }
+    .cl-item:last-child { border-bottom: none; }
+
+    .cl-box {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--border-hi);
+      border-radius: 3px;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      background: var(--bg);
+    }
+    .cl-item.checked .cl-box {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .cl-item.checked .cl-box::after {
+      content: '✓';
+      font-size: 11px;
+      color: var(--bg);
+      font-weight: 600;
+    }
+    .cl-item.checked .cl-label { color: var(--text-3); text-decoration: line-through; text-decoration-color: var(--text-3); }
+
+    .cl-label {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 400;
+      transition: color .2s;
+    }
+    .cl-sublabel {
+      font-size: 12px;
+      color: var(--text-3);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: .3rem;
+    }
+
+    /* Progress meter */
+    .progress-meter {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .meter-track {
+      flex: 1;
+      height: 4px;
+      background: var(--bg-3);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .meter-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: width .4s ease;
+    }
+    .meter-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .meter-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+
+    /* ── BREAK THE RULES ── */
+    .break-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+    .break-item {
+      background: var(--bg-2);
+      padding: 1.25rem;
+    }
+    .break-item .bi-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: .5rem;
+    }
+    .break-item p {
+      font-size: 13px;
+      margin: 0;
+      color: var(--text-2);
+    }
+
+    /* ── BADGE ── */
+    .badge-wrap {
+      margin: 2rem 0;
+      padding: 3rem 2rem;
+      border: 1px dashed var(--gold-dim);
+      border-radius: 6px;
+      text-align: center;
+      background: var(--gold-glow);
+      position: relative;
+    }
+    .badge-wrap::before {
+      content: 'FEARLESS MEDIA GROUP';
+      position: absolute;
+      top: .85rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .2em;
+      color: var(--gold-dim);
+    }
+
+    .badge-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: .5rem;
+    }
+    .badge-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 1.5rem;
+    }
+    .badge-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+      margin-bottom: 1.5rem;
+    }
+    .badge-items li {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: .05em;
+    }
+    .badge-items li::before { content: '✓ '; color: var(--gold); }
+
+    .badge-note {
+      font-size: 12px;
+      color: var(--text-3);
+      font-style: italic;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      margin-top: .5rem;
+    }
+
+    .badge-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--gold-dim);
+      margin-top: .75rem;
+    }
+
+    /* ── FINAL NOTES ── */
+    .final-quote {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+    .final-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.4;
+      margin: 0;
+    }
+    .final-quote strong {
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 0 5rem;
+      border-top: 1px solid var(--border);
+      margin-top: 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-left { }
+    .footer-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-3);
+      line-height: 2;
+    }
+    .footer-meta strong { color: var(--text-2); font-weight: 400; }
+    .footer-right {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text-3);
+      text-align: right;
+      max-width: 260px;
+      line-height: 1.5;
+    }
+
+    /* Dividers */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 5rem 0 0;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-block:nth-child(1) { animation-delay: .1s; }
+    .section-block:nth-child(2) { animation-delay: .2s; }
+    .section-block:nth-child(3) { animation-delay: .3s; }
+    .principle-card:nth-child(1) { animation-delay: .05s; }
+    .principle-card:nth-child(2) { animation-delay: .10s; }
+    .principle-card:nth-child(3) { animation-delay: .15s; }
+    .principle-card:nth-child(4) { animation-delay: .20s; }
+    .principle-card:nth-child(5) { animation-delay: .25s; }
+    .principle-card:nth-child(6) { animation-delay: .30s; }
+    .principle-card:nth-child(7) { animation-delay: .35s; }
+    .principle-card:nth-child(8) { animation-delay: .40s; }
+
+    ul, ol { padding-left: 1.25rem; }
+    li { font-size: 14px; color: var(--text-2); margin-bottom: .4rem; font-weight: 300; }
+
+    @media (max-width: 600px) {
+      nav { display: none; }
+      header { padding: 5rem 0 3rem; }
+      .wrap { padding: 0 1.25rem; }
+      footer { flex-direction: column; }
+      .footer-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav>
+  <a href="#principles">Principles</a>
+  <a href="#action">Action</a>
+  <a href="#checklist">Checklist</a>
+  <a href="#badge">Badge</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="fmg-label">Fearless Media Group — Internal Standard</div>
+    <h1>Conscious<br><em>Code</em><br>Manifesto</h1>
+    <div class="header-meta">
+      <span class="version-pill">v1.1 — April 2026</span>
+      <span class="header-desc">Philosophy for responsible development with AI</span>
+    </div>
+  </header>
+
+  <!-- THE PROBLEM -->
+  <div class="section-block" id="problem">
+    <div class="section-eyebrow">01 — The Problem</div>
+    <h2>We stopped thinking.</h2>
+    <p>The software industry replaced mechanical friction with infinite AI generation and called it progress. The bottleneck was never typing — it was decision-making. We've outsourced both.</p>
+    <p>We became <strong>syntax accumulators</strong>, not craftspeople. In our obsession with velocity, personal branding, and AI-assisted over-engineering, we've forgotten the fundamental purpose: <strong>build useful tools that solve real problems without wasting energy</strong> — neither ours, nor the system's, nor the planet's.</p>
+
+    <div class="problem-examples">
+      <p>Twenty npm packages to render a checkbox.</p>
+      <p>An agent refactoring code that already works because the prompt implied it should.</p>
+      <p>A README generated by AI describing a project that doesn't exist yet.</p>
+      <p>Architecture for a million users serving forty.</p>
+      <p>Code the author cannot debug without reopening the chat that wrote it.</p>
+    </div>
+
+    <p>The problem isn't the tools. It's abdication dressed as productivity.</p>
+
+    <div class="position-block">
+      <p><strong>We reclaim control.</strong> We refuse to be spectators of the noise. We choose to think first. We use AI as an instrument — <strong>never as a substitute for judgment.</strong></p>
+    </div>
+  </div>
+
+  <!-- PRINCIPLES -->
+  <div class="section-block" id="principles">
+    <div class="section-eyebrow">02 — Core Principles</div>
+    <h2>Eight commitments.<br>No exceptions.</h2>
+  </div>
+
+  <div class="principles-grid">
+
+    <!-- P1 -->
+    <div class="principle-card">
+      <div class="p-ghost-num">1</div>
+      <div class="p-label">Principle 01</div>
+      <h3 class="p-title">Logic dictates. AI executes.</h3>
+      <p class="p-body">Delegating typing is not delegating thinking. The architecture, data flow, and final decision live in the creator's mind. <strong>We are directors; AI is the instrumentalist.</strong> Every critical decision is auditable to a human origin.</p>
+      <ul class="p-items">
+        <li>The project's mental map exists in your head, not in an AI chat</li>
+        <li>You can explain why each component exists without consulting the history</li>
+        <li>Decisions delegated to AI are documented and justified</li>
+        <li>Code is readable without the original prompt</li>
+      </ul>
+    </div>
+
+    <!-- P2 -->
+    <div class="principle-card">
+      <div class="p-ghost-num">2</div>
+      <div class="p-label">Principle 02</div>
+      <h3 class="p-title">Sufficiency is victory.</h3>
+      <p class="p-body">Every system has a natural limit. Like an audio mix, <strong>code suffocates under unnecessary layers.</strong> When it works and it's stable: stop. Perfectionism is a luxury we cannot afford — and a debt we will pay later.</p>
+      <ul class="p-items">
+        <li>If the function is fulfilled and maintainable, iteration stops</li>
+        <li>You don't anticipate optimizations nobody asked for</li>
+        <li>You don't refactor "just in case" for a future that may not arrive</li>
+        <li>The metric is: works + is understandable — not perfect</li>
+      </ul>
+    </div>
+
+    <!-- P3 -->
+    <div class="principle-card">
+      <div class="p-ghost-num">3</div>
+      <div class="p-label">Principle 03</div>
+      <h3 class="p-title">Conscious decisions, deliberate execution.</h3>
+      <p class="p-body">Before writing: we think. <strong>Clear architecture, explicit dependencies, documented trade-offs.</strong> Speed never replaces thought. A slow start saves ten fast restarts.</p>
+      <ul class="p-items">
+        <li>Before touching code: write the problem in 3–4 sentences</li>
+        <li>Critical decisions are recorded (<code>DECISIONS.md</code>)</li>
+        <li>Every external dependency has a documented reason</li>
+        <li>Trade-offs are explicit in comments, not assumed</li>
+      </ul>
+    </div>
+
+    <!-- P4 -->
+    <div class="principle-card">
+      <div class="p-ghost-num">4</div>
+      <div class="p-label">Principle 04</div>
+      <h3 class="p-title">Responsible energy spending.</h3>
+      <p class="p-body">Deploying massive compute to refactor what already works is waste. <strong>We privilege "good enough" over sterile perfection.</strong> Every AI token has a cost — financial, cognitive, and environmental. We use it where it genuinely matters.</p>
+      <ul class="p-items">
+        <li>You don't run massive models for trivial use cases</li>
+        <li>If the manual solution is cheaper and faster, do it manually</li>
+        <li>You document why AI was used in each critical case</li>
+        <li>You don't generate code "just in case you need it later"</li>
+        <li>Your cognitive energy is also a finite resource — protect it</li>
+      </ul>
+    </div>
+
+    <!-- P5 -->
+    <div class="principle-card">
+      <div class="p-ghost-num">5</div>
+      <div class="p-label">Principle 05</div>
+      <h3 class="p-title">Evidence drives iteration.</h3>
+      <p class="p-body">We don't chase phantom problems. <strong>We deploy early, observe honestly, iterate only with evidence.</strong> Speculation is not a reason to refactor. Real errors from real usage are.</p>
+      <ul class="p-items">
+        <li>Code goes to production early, with monitoring</li>
+        <li>First changes come from real errors, not gut feelings</li>
+        <li>Metrics that matter: does it work? is it used? where does it fail?</li>
+        <li>5+ users reporting the same issue means fix it — 1 person speculating means ignore it</li>
+        <li>Refactoring requires a specific trigger: a condition, not a schedule</li>
+      </ul>
+    </div>
+
+    <!-- P6 -->
+    <div class="principle-card">
+      <div class="p-ghost-num">6</div>
+      <div class="p-label">Principle 06</div>
+      <h3 class="p-title">Purpose over exhibition.</h3>
+      <p class="p-body">We build tools that solve our real workflow — <strong>not tools that demonstrate our capability to an imagined audience.</strong> The only valid measure: does this make the work easier? GitHub stars, trending repos, and social visibility are irrelevant signals.</p>
+      <ul class="p-items">
+        <li>If the code is never shown publicly, all the better</li>
+        <li>Success isn't recognition — it's a workflow that no longer hurts</li>
+        <li>You document for yourself in six months, not for an audience</li>
+        <li>Tools evolve with real needs, not with trends</li>
+      </ul>
+    </div>
+
+    <!-- P7 — NEW -->
+    <div class="principle-card">
+      <div class="p-ghost-num">7</div>
+      <div class="p-label">Principle 07 <span class="p-tag new">v1.1</span></div>
+      <h3 class="p-title">Cognitive sovereignty is non-negotiable.</h3>
+      <p class="p-body">AI can generate your code. It cannot generate your understanding. <strong>If you cannot debug, rewrite, or explain the core of your project without AI assistance, you are not the author — you are the operator.</strong> The difference matters when something fails in production at 2am with no connectivity.</p>
+      <p class="p-body">There is a critical difference between "I can read this" and "I understand this." The real test: could you rebuild the critical module from scratch, given only the spec? If not — that's cognitive debt, not just technical debt. AI should accelerate your existing skills, never replace the need to have them.</p>
+      <ul class="p-items">
+        <li>Once per project: attempt to rewrite the core module from scratch in 30 minutes</li>
+        <li>If you can't: either learn it first, or document the section as a black box (with explicit risk)</li>
+        <li>The real test: can you debug it without AI context?</li>
+        <li>Calibrate trust by domain — AI is reliable for boilerplate, dangerous for niche internals</li>
+        <li>If you catch AI hallucinating in your domain: log it as calibration data</li>
+      </ul>
+    </div>
+
+    <!-- P8 — NEW -->
+    <div class="principle-card">
+      <div class="p-ghost-num">8</div>
+      <div class="p-label">Principle 08 <span class="p-tag new">v1.1</span></div>
+      <h3 class="p-title">Failures are primary documentation.</h3>
+      <p class="p-body">An annotated error log is worth more than any up-front design document. <strong>Failure modes discovered in production are irreplaceable knowledge.</strong> We document failures with the same rigor as successes — because they carry more signal.</p>
+      <p class="p-body">This applies doubly to AI failures: hallucinated APIs, wrong assumptions, subtly broken patterns. Each one is a data point for calibrating trust. Ignoring AI failures is ignoring the most honest feedback in your workflow.</p>
+      <ul class="p-items">
+        <li><code>FAILURES.md</code> carries the same institutional weight as <code>DECISIONS.md</code></li>
+        <li>Every resolved bug: what assumption failed? That goes in the doc.</li>
+        <li>AI errors (hallucinations, incorrect code) are logged as domain calibration data</li>
+        <li>Failure documentation is not blame — it's institutional memory</li>
+        <li>The question after every incident: what did this teach us that we didn't know before?</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- end principles grid -->
+
+  <!-- ACTION -->
+  <div class="section-block" id="action">
+    <div class="section-eyebrow">03 — How This Translates to Action</div>
+    <h2>Before, during, and after.</h2>
+
+    <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);margin:2rem 0 1rem;">Before Coding</h3>
+    <div class="ops-grid">
+      <div class="op-block">
+        <div class="op-title">Define the Problem — not the solution</div>
+        <ul class="op-items">
+          <li>What fails now? Where exactly?</li>
+          <li>Who uses it? How often?</li>
+          <li>What's the cost of NOT fixing it?</li>
+        </ul>
+      </div>
+      <div class="op-block">
+        <div class="op-title">Set hard complexity limits</div>
+        <ul class="op-items">
+          <li>Maximum external dependencies? (write the number)</li>
+          <li>Maximum lines before mandatory refactor? (write the number)</li>
+          <li>What cases will NOT be supported? (be explicit and honest)</li>
+        </ul>
+      </div>
+      <div class="op-block">
+        <div class="op-title">Estimate true energy cost</div>
+        <ul class="op-items">
+          <li>If using AI: why not a simpler solution?</li>
+          <li>Is AI use justified versus maintaining old code?</li>
+          <li>What technical debt is being accepted today?</li>
+          <li>What is the cognitive cost to the team?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);margin:2rem 0 1rem;">During Coding</h3>
+    <div class="ops-grid">
+      <div class="op-block">
+        <div class="op-title">Keep the mental map alive</div>
+        <ul class="op-items">
+          <li>Can you explain each decision without consulting the AI?</li>
+          <li>Are AI-suggested decisions commented and attributed?</li>
+          <li>Is the code readable without the chat history?</li>
+        </ul>
+      </div>
+      <div class="op-block">
+        <div class="op-title">Maintain the audit trail</div>
+        <ul class="op-items">
+          <li>If AI suggested something critical: document it immediately</li>
+          <li>Format: [Decision] | [Alternatives rejected] | [Why] | [Who] | [Date]</li>
+          <li>AI hallucinations caught → log in <code>FAILURES.md</code> with domain</li>
+        </ul>
+      </div>
+      <div class="op-block">
+        <div class="op-title">Testing = thinking, not vanity coverage</div>
+        <ul class="op-items">
+          <li>Do tests verify expected behavior — or just "pass"?</li>
+          <li>Are there tests for real edge cases, not invented ones?</li>
+          <li>Metric: can you sleep if a test fails? If not, it's important.</li>
+        </ul>
+      </div>
+      <div class="op-block">
+        <div class="op-title">Documentation directed at yourself</div>
+        <ul class="op-items">
+          <li>Write for yourself in six months — not for an imagined audience</li>
+          <li>If AI generated it: do you fully understand it? Would you simplify it?</li>
+          <li>If you wouldn't simplify it: document why the complexity is justified</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);margin:2rem 0 1rem;">After Deployment</h3>
+    <div class="ops-grid">
+      <div class="op-block">
+        <div class="op-title">Real observation, not vanity metrics</div>
+        <ul class="op-items">
+          <li>First two weeks: what fails? What goes unused?</li>
+          <li>Real metrics: logs, errors, actual usage — not impressions</li>
+        </ul>
+      </div>
+      <div class="op-block">
+        <div class="op-title">Iterate only with evidence</div>
+        <ul class="op-items">
+          <li>5+ users with the same issue? Fix it.</li>
+          <li>Speculative optimization idea? Ignore it.</li>
+          <li>80/20 rule applied? Document it.</li>
+        </ul>
+      </div>
+      <div class="op-block">
+        <div class="op-title">Make technical debt visible</div>
+        <ul class="op-items">
+          <li>Every HACK: why? What condition triggers refactor?</li>
+          <li>File: <code>TECHNICAL_DEBT.md</code> — priority: critical / medium / low</li>
+          <li>Review quarterly: resolve, escalate, or consciously defer</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHEN TO BREAK THE RULES — NEW -->
+  <div class="section-block">
+    <div class="section-eyebrow">04 — Exceptions</div>
+    <h2>When to break these rules.</h2>
+    <p>A manifesto without explicit exceptions is a religion, not a methodology. These rules exist for production code and maintained projects. They do not apply when:</p>
+
+    <div class="break-grid">
+      <div class="break-item">
+        <div class="bi-title">Disposable Prototype</div>
+        <p>You're building a throwaway spike (&lt;48h). Skip the docs. If it survives 48h, apply the full standard retroactively.</p>
+      </div>
+      <div class="break-item">
+        <div class="bi-title">Active Learning</div>
+        <p>You're exploring a new API, framework, or domain. Mess freely. The constraint is: document what you learned, not what you built.</p>
+      </div>
+      <div class="break-item">
+        <div class="bi-title">Emergency Incident</div>
+        <p>Production is down. Fix first, document after. <strong>Every exception taken during an incident gets a post-mortem entry.</strong></p>
+      </div>
+      <div class="break-item">
+        <div class="bi-title">Explicit Override</div>
+        <p>You knowingly break a principle. Fine — but document the override, the reason, and the exit condition. Conscious deviation is not a violation.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:1.5rem;font-size:13px;color:var(--text-3);">The judgment call is always yours. These are defaults, not constraints. The standard only fails when you break rules unconsciously.</p>
+  </div>
+
+  <!-- CERTIFICATION CHECKLIST -->
+  <div class="section-block" id="checklist">
+    <div class="section-eyebrow">05 — Certification Checklist</div>
+    <h2>All items required.<br>No partial credit.</h2>
+    <p>Use this to verify your project meets Conscious Code standards. Progress persists in your browser.</p>
+
+    <div class="progress-meter">
+      <span class="meter-title">Checklist</span>
+      <div class="meter-track">
+        <div class="meter-fill" id="meterFill" style="width:0%"></div>
+      </div>
+      <span class="meter-label" id="meterLabel">0 / 0</span>
+    </div>
+
+    <div class="checklist-section">
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">Documentation</div>
+
+        <div class="cl-item" data-id="doc1">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">README.md — problem (2–3 sentences), use cases, explicit non-supported cases, dependencies with reason</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="doc2">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">ARCHITECTURE.md — data flow diagram or description, design decisions, trade-offs, why this vs alternatives</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="doc3">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">DECISIONS.md — each critical AI decision, alternatives rejected, responsible person + date</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="doc4">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">TECHNICAL_DEBT.md — all HACK/TODO with context, priority, and exit condition (not a date — a condition)</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="doc5">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">FAILURES.md — all AI hallucinations caught, bugs resolved in production, assumptions that failed</div>
+            <div class="cl-sublabel">new in v1.1 — principle 08</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="doc6">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Secrets strategy documented — no API keys in repo, rotation policy defined</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">Code Quality</div>
+
+        <div class="cl-item" data-id="code1">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Code is readable without AI context — someone unfamiliar can understand main flow</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="code2">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Tests exist — at least 1 per documented use case, verifying behavior not just passing</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="code3">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">At least 1 test for a real production edge case — not a theoretical one</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="code4">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Dependency count respected — maximum explicitly decided before coding, not after</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="code5">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Functions &gt;50 lines justified in comments — not assumed to be acceptable</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">Cognitive Sovereignty</div>
+
+        <div class="cl-item" data-id="cog1">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Core module rebuild test passed — author attempted to rewrite critical section without AI</div>
+            <div class="cl-sublabel">new in v1.1 — principle 07</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="cog2">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Black box sections documented — any section the author cannot debug alone is flagged with explicit risk</div>
+            <div class="cl-sublabel">new in v1.1 — principle 07</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="cog3">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">AI trust map defined — domains where AI is reliable vs. where output requires full review</div>
+            <div class="cl-sublabel">new in v1.1 — principle 07</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">Responsible AI Use</div>
+
+        <div class="cl-item" data-id="ai1">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">AI use documented — what tasks used AI, what was not delegated and why, % generated vs written</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="ai2">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Energy cost justified — cheaper alternatives considered and dismissed with reason</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="ai3">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Decisions auditable — chain from problem → architecture → code is traceable without AI context</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="ai4">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Technical debt explicit — no "weird stuff" without documentation; confusing AI output is always commented</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">Execution</div>
+
+        <div class="cl-item" data-id="exec1">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Deployed — version tagged, documentation in sync with deployed code</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="exec2">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">First 2 weeks monitored — usage metrics and real errors documented</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="exec3">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Iteration decisions are data-based, not intuition-based</div>
+          </div>
+        </div>
+        <div class="cl-item" data-id="exec4">
+          <div class="cl-box"></div>
+          <div>
+            <div class="cl-label">Peer review — at least one person outside the project can navigate the codebase using only the documentation</div>
+            <div class="cl-sublabel">new in v1.1 — badge integrity requirement</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BADGE -->
+  <div class="section-block" id="badge">
+    <div class="section-eyebrow">06 — The Standard</div>
+    <h2>If the checklist is complete.</h2>
+    <p>This is not a public certification. It's an internal standard — the FMG mark that a project was built with discipline, not speed theater. The badge means the work can be maintained, explained, and handed off by its author. That's it.</p>
+
+    <div class="badge-wrap">
+      <div class="badge-mark">✦</div>
+      <div class="badge-title">Conscious Code — FMG Standard v1.1</div>
+      <ul class="badge-items">
+        <li>Logic → Explicit architecture, human origin</li>
+        <li>Sufficiency → No over-engineering, no ghost features</li>
+        <li>Decisions → Fully auditable, documented</li>
+        <li>Energy → Responsible, justified use</li>
+        <li>Evidence → Verified maturity, real usage</li>
+        <li>Purpose → Utility over exhibition</li>
+        <li>Sovereignty → Author can debug and rebuild without AI</li>
+        <li>Failures → Documented as institutional knowledge</li>
+      </ul>
+      <p class="badge-note">This badge has no external authority. Its value is entirely internal — and that makes it harder to fake. If you certified yourself without completing the checklist, you've only deceived yourself. We consider that worse.</p>
+      <div class="badge-url">fearless.media/conscious-code</div>
+    </div>
+  </div>
+
+  <!-- FINAL NOTES -->
+  <div class="section-block">
+    <div class="section-eyebrow">07 — Final Notes</div>
+
+    <div class="final-quote">
+      <p>This manifesto is not a list of pretty principles. It is a way of working that demands discipline — not laziness dressed as philosophy.</p>
+      <p style="margin-top:1.25rem;">It's not "do the minimum." It's <strong>"do the minimum, thoughtfully, documented, and verified against reality."</strong></p>
+    </div>
+
+    <p style="margin-top:2rem;">If you copy these principles without living them, the badge is just marketing. The goal here is something real: a workflow that you understand, can explain, and can defend — with or without internet access, with or without the chat history that built it.</p>
+    <p>The measure of your mastery is not what you can generate. It's what you can maintain.</p>
+  </div>
+
+  <hr class="divider">
+
+  <footer>
+    <div class="footer-left">
+      <div class="footer-meta">
+        <strong>Version:</strong> 1.1<br>
+        <strong>Updated:</strong> April 2026<br>
+        <strong>Author:</strong> Fearless Media Group<br>
+        <strong>Philosophy:</strong> Responsibility without excuses. Rigor without perfectionism.<br>
+        <strong>Changes in v1.1:</strong> P7 Cognitive Sovereignty, P8 Failure Documentation,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exceptions section, Peer review requirement, Interactive checklist
+      </div>
+    </div>
+    <div class="footer-right">
+      "The measure of your mastery is not what you can generate. It's what you can maintain."
+    </div>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script>
+  // Progress bar on scroll
+  const pb = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    pb.style.width = (window.scrollY / total * 100) + '%';
+  });
+
+  // Checklist with localStorage
+  const STORAGE_KEY = 'ccm_v1_1_checklist';
+  const items = document.querySelectorAll('.cl-item');
+  const meterFill = document.getElementById('meterFill');
+  const meterLabel = document.getElementById('meterLabel');
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+  }
+  function updateMeter() {
+    const total = items.length;
+    const done = document.querySelectorAll('.cl-item.checked').length;
+    const pct = total ? (done / total * 100) : 0;
+    meterFill.style.width = pct + '%';
+    meterLabel.textContent = done + ' / ' + total;
+  }
+
+  // Init
+  const state = loadState();
+  items.forEach(item => {
+    const id = item.dataset.id;
+    if (state[id]) item.classList.add('checked');
+    item.addEventListener('click', () => {
+      item.classList.toggle('checked');
+      state[id] = item.classList.contains('checked');
+      saveState(state);
+      updateMeter();
+    });
+  });
+  updateMeter();
+
+  // Intersection Observer for section animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animationPlayState = 'running';
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.section-block, .principle-card').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
