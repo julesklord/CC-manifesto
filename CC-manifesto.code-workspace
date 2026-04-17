@@ -6,66 +6,9 @@
 	],
 	"settings": {
 		"editor.fontSize": 12,
-		"editor.fontFamily": "CaskayviaCove Nerd Font",
-		"editor.experimentalGpuAcceleration": "on",
-		"terminal.integrated.enableImages": true,
-		"debug.console.fontSize": 12,
+		"editor.fontFamily": "CaskaydiaCove Nerd Font",
+		"terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
 		"terminal.integrated.fontSize": 12,
-		"markdown.preview.fontSize": 12
-	},
-	"launch": {
-		"configurations": [
-			
-			{
-				"type": "pwa-msedge",
-				"name": "Launch Microsoft Edge",
-				"request": "launch",
-				"runtimeArgs": [
-					"--remote-debugging-port=9222"
-				],
-				"url": "c:\\Users\\julio\\.antigravity\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.1.10-universal\\out\\startpage\\index.html",
-				"presentation": {
-					"hidden": true
-				}
-			},
-			{
-				"type": "pwa-msedge",
-				"name": "Launch Microsoft Edge in headless mode",
-				"request": "launch",
-				"runtimeArgs": [
-					"--headless",
-					"--remote-debugging-port=9222"
-				],
-				"url": "c:\\Users\\julio\\.antigravity\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.1.10-universal\\out\\startpage\\index.html",
-				"presentation": {
-					"hidden": true
-				}
-			},
-			{
-				"type": "vscode-edge-devtools.debug",
-				"name": "Open Edge DevTools",
-				"request": "attach",
-				"url": "c:\\Users\\julio\\.antigravity\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.1.10-universal\\out\\startpage\\index.html",
-				"presentation": {
-					"hidden": true
-				}
-			}
-		],
-		"compounds": [
-			{
-				"name": "Launch Edge Headless and attach DevTools",
-				"configurations": [
-					"Launch Microsoft Edge in headless mode",
-					"Open Edge DevTools"
-				]
-			},
-			{
-				"name": "Launch Edge and attach DevTools",
-				"configurations": [
-					"Launch Microsoft Edge",
-					"Open Edge DevTools"
-				]
-			}
-		]
+		"terminal.integrated.fontWeight": "400"
 	}
 }
