@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conscious Code Manifesto v1.1 — Fearless Media Group</title>
+  <title>Conscious Code Manifesto v1.2 — Fearless Media Group</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -150,6 +150,7 @@
       align-items: center;
       gap: 2rem;
       margin-top: 2rem;
+      flex-wrap: wrap;
     }
     .version-pill {
       font-family: 'JetBrains Mono', monospace;
@@ -165,6 +166,40 @@
       font-size: 13px;
       color: var(--text-2);
       font-weight: 300;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: .85rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .cta-row a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: .8rem 1rem;
+      border-radius: 4px;
+      transition: all .18s ease;
+    }
+    .cta-primary {
+      background: var(--gold);
+      color: var(--bg);
+      border: 1px solid var(--gold);
+    }
+    .cta-primary:hover {
+      background: #d8b45a;
+    }
+    .cta-secondary {
+      color: var(--text);
+      border: 1px solid var(--border-hi);
+      background: var(--bg-2);
+    }
+    .cta-secondary:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold);
     }
 
     /* ── SECTION TITLES ── */
@@ -199,6 +234,45 @@
       line-height: 1.15;
       color: var(--text);
       margin-bottom: 1.25rem;
+    }
+
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+    .doc-card {
+      background: var(--bg-2);
+      padding: 1.35rem;
+    }
+    .doc-card a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    .doc-card a:hover {
+      color: var(--gold);
+    }
+    .doc-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .75rem;
+    }
+    .doc-card p {
+      font-size: 13px;
+      margin: 0;
+      color: var(--text-2);
+    }
+
+    .level-intro {
+      max-width: 620px;
     }
 
     p {
@@ -703,6 +777,7 @@
       .wrap { padding: 0 1.25rem; }
       footer { flex-direction: column; }
       .footer-right { text-align: left; }
+      .cta-row a { width: 100%; text-align: center; }
     }
   </style>
 </head>
@@ -712,7 +787,9 @@
 <div class="progress-bar" id="progressBar"></div>
 
 <nav>
+  <a href="#docs">Docs</a>
   <a href="#principles">Principles</a>
+  <a href="#levels">Levels</a>
   <a href="#action">Action</a>
   <a href="#checklist">Checklist</a>
   <a href="#badge">Badge</a>
@@ -722,20 +799,59 @@
 
   <!-- HEADER -->
   <header>
-    <div class="fmg-label">Fearless Media Group — Internal Standard</div>
+    <div class="fmg-label">Fearless Media Group - Internal Standard</div>
     <h1>Conscious<br><em>Code</em><br>Manifesto</h1>
     <div class="header-meta">
-      <span class="version-pill">v1.1 — April 2026</span>
-      <span class="header-desc">Philosophy for responsible development with AI</span>
+      <span class="version-pill">v1.2 - April 2026</span>
+      <span class="header-desc">A staged discipline for building with AI without giving up judgment, clarity, or maintainability.</span>
+    </div>
+    <div class="cta-row">
+      <a class="cta-primary" href="../MANIFESTO.md">Read Manifesto</a>
+      <a class="cta-secondary" href="../LEVELS.md">View Levels</a>
+      <a class="cta-secondary" href="../ADOPTION.md">Adoption Guide</a>
     </div>
   </header>
+
+  <!-- DOCS -->
+  <div class="section-block" id="docs">
+    <div class="section-eyebrow">00 - Repository</div>
+    <h2>The landing is the invitation.<br>The repository is the standard.</h2>
+    <p>The markdown documents are now the source of truth. This page introduces the idea, but the repository carries the working method, maturity model, and adoption path.</p>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-title"><a href="../README.md">README.md</a></div>
+        <p>Positioning, intended use, and repository overview.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-title"><a href="../MANIFESTO.md">MANIFESTO.md</a></div>
+        <p>The v1.2 manifesto in operational form.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-title"><a href="../LEVELS.md">LEVELS.md</a></div>
+        <p>The maturity model: Explore, Personal Tool, Maintained, Certified.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-title"><a href="../CHECKLIST.md">CHECKLIST.md</a></div>
+        <p>Checklists by level, instead of one universal burden.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-title"><a href="../ADOPTION.md">ADOPTION.md</a></div>
+        <p>How to apply Conscious Code to an existing repository.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-title"><a href="../ARCHITECTURE.md">ARCHITECTURE.md</a></div>
+        <p>Why this repository is shaped as doctrine, not product.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- THE PROBLEM -->
   <div class="section-block" id="problem">
     <div class="section-eyebrow">01 — The Problem</div>
-    <h2>We stopped thinking.</h2>
-    <p>The software industry replaced mechanical friction with infinite AI generation and called it progress. The bottleneck was never typing — it was decision-making. We've outsourced both.</p>
-    <p>We became <strong>syntax accumulators</strong>, not craftspeople. In our obsession with velocity, personal branding, and AI-assisted over-engineering, we've forgotten the fundamental purpose: <strong>build useful tools that solve real problems without wasting energy</strong> — neither ours, nor the system's, nor the planet's.</p>
+    <h2>We outsourced judgment and called it speed.</h2>
+    <p>The software industry replaced mechanical friction with infinite AI generation and called it progress. The bottleneck was never typing - it was decision-making. We are now outsourcing both.</p>
+    <p>We became <strong>syntax accumulators</strong>, not builders with operational ownership. In the obsession with velocity, branding, and AI-assisted over-engineering, the original purpose got blurred: <strong>build useful tools that solve real problems without wasting energy</strong> - neither ours, nor the system's, nor the planet's.</p>
 
     <div class="problem-examples">
       <p>Twenty npm packages to render a checkbox.</p>
@@ -745,17 +861,17 @@
       <p>Code the author cannot debug without reopening the chat that wrote it.</p>
     </div>
 
-    <p>The problem isn't the tools. It's abdication dressed as productivity.</p>
+    <p>The problem is not the tools. It is abdication dressed as productivity.</p>
 
     <div class="position-block">
-      <p><strong>We reclaim control.</strong> We refuse to be spectators of the noise. We choose to think first. We use AI as an instrument — <strong>never as a substitute for judgment.</strong></p>
+      <p><strong>We reclaim control.</strong> We refuse to be spectators of the noise. We choose to think first. We use AI as an instrument - <strong>never as a substitute for judgment.</strong></p>
     </div>
   </div>
 
   <!-- PRINCIPLES -->
   <div class="section-block" id="principles">
-    <div class="section-eyebrow">02 — Core Principles</div>
-    <h2>Eight commitments.<br>No exceptions.</h2>
+    <div class="section-eyebrow">02 - Core Principles</div>
+    <h2>Eight commitments.<br>One operating standard.</h2>
   </div>
 
   <div class="principles-grid">
@@ -849,7 +965,7 @@
     <!-- P7 — NEW -->
     <div class="principle-card">
       <div class="p-ghost-num">7</div>
-      <div class="p-label">Principle 07 <span class="p-tag new">v1.1</span></div>
+      <div class="p-label">Principle 07 <span class="p-tag new">v1.2</span></div>
       <h3 class="p-title">Cognitive sovereignty is non-negotiable.</h3>
       <p class="p-body">AI can generate your code. It cannot generate your understanding. <strong>If you cannot debug, rewrite, or explain the core of your project without AI assistance, you are not the author — you are the operator.</strong> The difference matters when something fails in production at 2am with no connectivity.</p>
       <p class="p-body">There is a critical difference between "I can read this" and "I understand this." The real test: could you rebuild the critical module from scratch, given only the spec? If not — that's cognitive debt, not just technical debt. AI should accelerate your existing skills, never replace the need to have them.</p>
@@ -865,7 +981,7 @@
     <!-- P8 — NEW -->
     <div class="principle-card">
       <div class="p-ghost-num">8</div>
-      <div class="p-label">Principle 08 <span class="p-tag new">v1.1</span></div>
+      <div class="p-label">Principle 08 <span class="p-tag new">v1.2</span></div>
       <h3 class="p-title">Failures are primary documentation.</h3>
       <p class="p-body">An annotated error log is worth more than any up-front design document. <strong>Failure modes discovered in production are irreplaceable knowledge.</strong> We document failures with the same rigor as successes — because they carry more signal.</p>
       <p class="p-body">This applies doubly to AI failures: hallucinated APIs, wrong assumptions, subtly broken patterns. Each one is a data point for calibrating trust. Ignoring AI failures is ignoring the most honest feedback in your workflow.</p>
@@ -881,9 +997,35 @@
   </div>
   <!-- end principles grid -->
 
+  <!-- LEVELS -->
+  <div class="section-block" id="levels">
+    <div class="section-eyebrow">03 - Maturity Levels</div>
+    <h2>Not every project deserves the same burden.</h2>
+    <p class="level-intro">Conscious Code v1.2 is staged by design. A throwaway experiment, a personal utility, and a flagship repository should not be judged by the same operational requirements.</p>
+
+    <div class="break-grid">
+      <div class="break-item">
+        <div class="bi-title">Level 0 - Explore</div>
+        <p>For spikes, learning, and short-lived experiments. Record the question, the learning, and the next decision.</p>
+      </div>
+      <div class="break-item">
+        <div class="bi-title">Level 1 - Personal Tool</div>
+        <p>For tools that primarily serve your own workflow. Real use matters more than public polish.</p>
+      </div>
+      <div class="break-item">
+        <div class="bi-title">Level 2 - Maintained</div>
+        <p>For active repositories that must remain explainable, tested, and aligned with reality.</p>
+      </div>
+      <div class="break-item">
+        <div class="bi-title">Level 3 - Certified</div>
+        <p>For rare repositories that can serve as references for others. Certification is intentionally hard.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- ACTION -->
   <div class="section-block" id="action">
-    <div class="section-eyebrow">03 — How This Translates to Action</div>
+    <div class="section-eyebrow">04 - How This Translates to Action</div>
     <h2>Before, during, and after.</h2>
 
     <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);margin:2rem 0 1rem;">Before Coding</h3>
@@ -979,9 +1121,9 @@
     </div>
   </div>
 
-  <!-- WHEN TO BREAK THE RULES — NEW -->
+  <!-- WHEN TO BREAK THE RULES - NEW -->
   <div class="section-block">
-    <div class="section-eyebrow">04 — Exceptions</div>
+    <div class="section-eyebrow">05 - Exceptions</div>
     <h2>When to break these rules.</h2>
     <p>A manifesto without explicit exceptions is a religion, not a methodology. These rules exist for production code and maintained projects. They do not apply when:</p>
 
@@ -1009,9 +1151,10 @@
 
   <!-- CERTIFICATION CHECKLIST -->
   <div class="section-block" id="checklist">
-    <div class="section-eyebrow">05 — Certification Checklist</div>
+    <div class="section-eyebrow">06 - Certified Checklist</div>
     <h2>All items required.<br>No partial credit.</h2>
-    <p>Use this to verify your project meets Conscious Code standards. Progress persists in your browser.</p>
+    <p>This checklist now represents the highest maturity bar: <strong>Certified Conscious Code</strong>. Lower levels use lighter requirements defined in the repository docs. Progress persists in your browser.</p>
+    <p style="font-size:13px;color:var(--text-3);">If your project is still exploratory or personal, start with <a href="../LEVELS.md" style="color:var(--gold);text-decoration:none;">LEVELS.md</a> and <a href="../CHECKLIST.md" style="color:var(--gold);text-decoration:none;">CHECKLIST.md</a> instead of treating this as the entry barrier.</p>
 
     <div class="progress-meter">
       <span class="meter-title">Checklist</span>
@@ -1054,7 +1197,7 @@
           <div class="cl-box"></div>
           <div>
             <div class="cl-label">FAILURES.md — all AI hallucinations caught, bugs resolved in production, assumptions that failed</div>
-            <div class="cl-sublabel">new in v1.1 — principle 08</div>
+            <div class="cl-sublabel">carried into v1.2 - principle 08</div>
           </div>
         </div>
         <div class="cl-item" data-id="doc6">
@@ -1107,21 +1250,21 @@
           <div class="cl-box"></div>
           <div>
             <div class="cl-label">Core module rebuild test passed — author attempted to rewrite critical section without AI</div>
-            <div class="cl-sublabel">new in v1.1 — principle 07</div>
+            <div class="cl-sublabel">carried into v1.2 - principle 07</div>
           </div>
         </div>
         <div class="cl-item" data-id="cog2">
           <div class="cl-box"></div>
           <div>
             <div class="cl-label">Black box sections documented — any section the author cannot debug alone is flagged with explicit risk</div>
-            <div class="cl-sublabel">new in v1.1 — principle 07</div>
+            <div class="cl-sublabel">carried into v1.2 - principle 07</div>
           </div>
         </div>
         <div class="cl-item" data-id="cog3">
           <div class="cl-box"></div>
           <div>
             <div class="cl-label">AI trust map defined — domains where AI is reliable vs. where output requires full review</div>
-            <div class="cl-sublabel">new in v1.1 — principle 07</div>
+            <div class="cl-sublabel">carried into v1.2 - principle 07</div>
           </div>
         </div>
       </div>
@@ -1180,7 +1323,7 @@
           <div class="cl-box"></div>
           <div>
             <div class="cl-label">Peer review — at least one person outside the project can navigate the codebase using only the documentation</div>
-            <div class="cl-sublabel">new in v1.1 — badge integrity requirement</div>
+            <div class="cl-sublabel">required for certified level in v1.2</div>
           </div>
         </div>
       </div>
@@ -1190,13 +1333,13 @@
 
   <!-- BADGE -->
   <div class="section-block" id="badge">
-    <div class="section-eyebrow">06 — The Standard</div>
-    <h2>If the checklist is complete.</h2>
-    <p>This is not a public certification. It's an internal standard — the FMG mark that a project was built with discipline, not speed theater. The badge means the work can be maintained, explained, and handed off by its author. That's it.</p>
+    <div class="section-eyebrow">07 - The Standard</div>
+    <h2>If the certified checklist is complete.</h2>
+    <p>This is not a public certification. It is an internal mark that a project was built with discipline, not speed theater. In v1.2, the badge applies only to the `Certified Conscious Code` level.</p>
 
     <div class="badge-wrap">
       <div class="badge-mark">✦</div>
-      <div class="badge-title">Conscious Code — FMG Standard v1.1</div>
+      <div class="badge-title">Conscious Code - FMG Standard v1.2</div>
       <ul class="badge-items">
         <li>Logic → Explicit architecture, human origin</li>
         <li>Sufficiency → No over-engineering, no ghost features</li>
@@ -1207,22 +1350,22 @@
         <li>Sovereignty → Author can debug and rebuild without AI</li>
         <li>Failures → Documented as institutional knowledge</li>
       </ul>
-      <p class="badge-note">This badge has no external authority. Its value is entirely internal — and that makes it harder to fake. If you certified yourself without completing the checklist, you've only deceived yourself. We consider that worse.</p>
+      <p class="badge-note">This badge has no external authority. Its value is entirely internal - which makes it harder to fake. If you certify a project without meeting the bar, you have only weakened your own standard.</p>
       <div class="badge-url">fearless.media/conscious-code</div>
     </div>
   </div>
 
   <!-- FINAL NOTES -->
   <div class="section-block">
-    <div class="section-eyebrow">07 — Final Notes</div>
+    <div class="section-eyebrow">08 - Final Notes</div>
 
     <div class="final-quote">
-      <p>This manifesto is not a list of pretty principles. It is a way of working that demands discipline — not laziness dressed as philosophy.</p>
-      <p style="margin-top:1.25rem;">It's not "do the minimum." It's <strong>"do the minimum, thoughtfully, documented, and verified against reality."</strong></p>
+      <p>This manifesto is not a list of pretty principles. It is a way of working that demands discipline - not laziness disguised as philosophy.</p>
+      <p style="margin-top:1.25rem;">It is not "do the minimum." It is <strong>"do what is sufficient, consciously, documented, and verified against reality."</strong></p>
     </div>
 
-    <p style="margin-top:2rem;">If you copy these principles without living them, the badge is just marketing. The goal here is something real: a workflow that you understand, can explain, and can defend — with or without internet access, with or without the chat history that built it.</p>
-    <p>The measure of your mastery is not what you can generate. It's what you can maintain.</p>
+    <p style="margin-top:2rem;">If you copy these principles without living them, the badge is just marketing. The goal is something real: a workflow that you understand, can explain, and can defend - with or without internet access, with or without the chat history that helped build it.</p>
+    <p>The measure of mastery is not what can be generated. It is what can still be maintained when the generation is gone.</p>
   </div>
 
   <hr class="divider">
@@ -1230,12 +1373,13 @@
   <footer>
     <div class="footer-left">
       <div class="footer-meta">
-        <strong>Version:</strong> 1.1<br>
+        <strong>Version:</strong> 1.2<br>
+        <strong>Docs:</strong> Repository markdown is source of truth<br>
         <strong>Updated:</strong> April 2026<br>
         <strong>Author:</strong> Fearless Media Group<br>
         <strong>Philosophy:</strong> Responsibility without excuses. Rigor without perfectionism.<br>
-        <strong>Changes in v1.1:</strong> P7 Cognitive Sovereignty, P8 Failure Documentation,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exceptions section, Peer review requirement, Interactive checklist
+        <strong>Changes in v1.2:</strong> Staged maturity levels, repo-first docs,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;certified-only checklist, landing aligned to repository
       </div>
     </div>
     <div class="footer-right">
@@ -1254,7 +1398,7 @@
   });
 
   // Checklist with localStorage
-  const STORAGE_KEY = 'ccm_v1_1_checklist';
+  const STORAGE_KEY = 'ccm_v1_2_certified_checklist';
   const items = document.querySelectorAll('.cl-item');
   const meterFill = document.getElementById('meterFill');
   const meterLabel = document.getElementById('meterLabel');
