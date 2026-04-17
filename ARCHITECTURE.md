@@ -31,14 +31,16 @@ That means the repository should privilege:
 - `ADOPTION.md`
   Practical migration path for applying the standard.
 
+- `index.html`
+  Public-facing landing page for GitHub Pages or lightweight static hosting.
+
 - `scratch/`
-  Exploratory artifacts, including the original landing-page draft.
+  Exploratory artifacts and non-canonical drafts.
 
 ## Source Of Truth
 
 The markdown documents in the repository root are the current source of truth.
-
-The original HTML landing page in `scratch/` is considered exploratory presentation material, not the governing standard.
+`index.html` presents that standard publicly, but should not become the only place where doctrine changes live.
 
 ## Adoption Pattern
 

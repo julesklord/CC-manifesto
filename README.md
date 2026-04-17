@@ -84,10 +84,17 @@ It is a discipline for keeping speed answerable to reality.
 
 ## Current Status
 
-This repository is now being transitioned from a single-page landing draft into a durable reference repo.
+This repository has been transitioned from a single-page landing draft into a durable reference repo.
 
-The original exploratory landing lives under `scratch/`.
-The markdown documents in this repository are now the primary source of truth.
+The public landing now lives in `index.html`.
+The markdown documents in the repository root remain the primary source of truth.
+
+## Deployment
+
+The repository is prepared for GitHub Pages:
+- `index.html` at the repository root is the public landing page
+- `.github/workflows/pages.yml` deploys the repository as a static site from `main`
+- `.nojekyll` avoids Jekyll-specific processing on Pages
 
 ## Working Rule
 
